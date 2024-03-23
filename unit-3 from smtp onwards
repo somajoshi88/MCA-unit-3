@@ -24,7 +24,7 @@ body = "This is a test email sent from Python."
 message.attach(MIMEText(body, 'plain'))
 
 # Establish a connection to the SMTP server
-with smtplib.SMTP(smtp_server, smtp_port) as server:
+with smtplib.SMTP(smtp_server, smtp_port) as server: # to establish the connection 
     server.starttls()  # Start TLS (Transport Layer Security) encryption
     server.login(sender_email, password)  # Login to the SMTP server
 
