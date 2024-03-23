@@ -158,9 +158,28 @@ Verify the Output:
 
 Check the output in the terminal/command prompt window to see the parsed XML data.
 By following these steps, you'll be able to run the XML parsing program in Python and see the extracted information from the XML file. Make sure to adjust the file names and paths accordingly if they differ from the provided example.
+******************************************************************************************************************************************
+Graphical User Interface (GUI) in Python refers to the creation of interactive applications that allow users to interact with the program through graphical elements such as windows, buttons, menus, and more. Python offers several libraries and frameworks for building GUI applications, each with its own features and capabilities. Here are some of the commonly used ones:
+
+Tkinter: Tkinter is Python's standard GUI library and is widely used for creating simple GUI applications. It provides a set of built-in widgets and is relatively easy to learn and use.
 
 
+import tkinter as tk
 
+# Create a new Tkinter window
+window = tk.Tk()
+
+# Set the window title
+window.title("Simple GUI Example")
+
+# Create a label widget
+label = tk.Label(window, text="Hello, GUI!")
+
+# Pack the label widget into the window
+label.pack()
+
+# Start the Tkinter event loop
+window.mainloop()
 
 
 
