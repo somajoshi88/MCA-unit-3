@@ -36,6 +36,34 @@ Make sure to replace placeholders such as smtp.example.com, your_email@example.c
 
 This code first creates an SMTP connection to the specified SMTP server. It then composes a multipart message including the sender, recipient, subject, and body of the email. Finally, it sends the email using the SMTP server, and upon successful delivery, it prints a confirmation message.
 
+
+
+import smtplib
+
+# Sender's email address
+sender_email = "your_email@gmail.com"
+
+# Receiver's email address
+receiver_email = "recipient@example.com"
+
+# Your Gmail password
+password = "your_password"
+
+# Email content
+subject = "Test Email from Python"
+body = "This is a test email sent from Python."
+
+# Construct the email message
+message = f"Subject: {subject}\n\n{body}"
+
+# Establish a connection to the SMTP server
+with smtplib.SMTP("smtp.gmail.com", 587) as server:
+    server.starttls()  # Start TLS encryption
+    server.login(sender_email, password)  # Login to your Gmail account
+    server.sendmail(sender_email, receiver_email, message)  # Send the email
+
+print("Email sent successfully!")
+
 ***************************************************************************************************************************************
 Xml is to used store and transport the data
 xml prasing in python
