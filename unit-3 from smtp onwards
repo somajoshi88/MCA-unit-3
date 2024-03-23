@@ -1,3 +1,48 @@
+SMTP (Simple Mail Transfer Protocol) is a protocol used to send email messages over the internet. Python provides a built-in module called smtplib which allows you to send emails using SMTP. Here's a simple example demonstrating how to send an email using SMTP in Python:
+
+python
+Copy code
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+
+# Email configuration
+smtp_server = 'smtp.example.com'  # Specify your SMTP server
+smtp_port = 587  # Specify the port for your SMTP server
+sender_email = 'your_email@example.com'  # Your email address
+receiver_email = 'recipient@example.com'  # Recipient's email address
+password = 'your_password'  # Your email password
+
+# Create a multipart message
+message = MIMEMultipart()
+message['From'] = sender_email
+message['To'] = receiver_email
+message['Subject'] = 'Test Email from Python'
+
+# Add body to email
+body = "This is a test email sent from Python."
+message.attach(MIMEText(body, 'plain'))
+
+# Establish a connection to the SMTP server
+with smtplib.SMTP(smtp_server, smtp_port) as server:
+    server.starttls()  # Start TLS (Transport Layer Security) encryption
+    server.login(sender_email, password)  # Login to the SMTP server
+
+    # Send the email
+    server.send_message(message)
+
+print('Email sent successfully!')
+Make sure to replace placeholders such as smtp.example.com, your_email@example.com, recipient@example.com, and your_password with your actual SMTP server details, your email address, recipient's email address, and your email password respectively.
+
+This code first creates an SMTP connection to the specified SMTP server. It then composes a multipart message including the sender, recipient, subject, and body of the email. Finally, it sends the email using the SMTP server, and upon successful delivery, it prints a confirmation message.
+
+
+
+
+
+
+
+*******************************************************************************************************************************************************************************************************************
 Embedding and Etending python 
 
 Embedding Python:
