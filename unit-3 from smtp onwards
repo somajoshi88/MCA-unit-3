@@ -64,6 +64,24 @@ with smtplib.SMTP("smtp.gmail.com", 587) as server:
 
 print("Email sent successfully!")
 
+*************************************************************************************
+difference between mime.multipart and mimetext
+
+from email.mime.multipart import MIMEMultipart
+
+# Create a multipart message
+message = MIMEMultipart()
+message['Subject'] = 'Email with Attachments'
+
+# Add plain text content
+message.attach(MIMEText("This is a plain text part."))
+
+# Add HTML content
+message.attach(MIMEText("<p>This is an HTML part.</p>", 'html'))
+
+# Add attachments
+# ...
+
 ***************************************************************************************************************************************
 Xml is to used store and transport the data
 xml prasing in python
@@ -208,7 +226,7 @@ window.mainloop()
 *******************************************************************************************************************************************************************************************************************
 Embedding and Etending python 
 
-Embedding Python:
+Embedding Python: (intregate python in other programing language)
 
 Think of embedding Python like inviting a friend over to your house. You have your own space (your program), but you want to let your friend (Python) come in and hang out with you.
 
@@ -218,7 +236,7 @@ Why you'd use it: Imagine you have a program written in C, and you want to add a
 
 Example: You have a game written in C++, but you want to let players create their own levels using Python scripts. By embedding Python, you can let the game engine execute these scripts and generate custom levels.
 
-Extending Python:
+Extending Python:(intregate other laguage code in python)
 
 Extending Python is like adding a new room to your house. Your house (Python) already has a lot of great stuff inside, but sometimes you need a little extra space for something special.
 
@@ -322,3 +340,147 @@ Output:
 
 Factorial of 5 is 120
 In summary, embedding Python allows you to include Python code in programs written in other languages, while extending Python enables you to write new functionality in other languages and access it from Python.
+**************************************
+
+lets have look with more details:
+
+Here's a step-by-step guide with a simple example for each:
+
+Embedding Python in C/C++:
+Install Python Development Files:
+Ensure you have Python installed on your system, including development files. You can typically install these using your package manager or by downloading them from the Python website.
+
+Include Python Header Files:
+In your C/C++ code, include the necessary Python header files:
+
+
+
+#include <Python.h>
+Initialize the Python Interpreter:
+Initialize the Python interpreter in your C/C++ application:
+
+
+Py_Initialize();
+Execute Python Code:
+You can now execute Python code from within your C/C++ application using functions like PyRun_SimpleString or PyRun_SimpleFile.
+
+Finalize the Python Interpreter:
+After executing Python code, finalize the Python interpreter:
+
+
+Py_Finalize();
+Example:
+Here's a simple C program that embeds Python and executes a Python script:
+
+
+#include <Python.h>
+
+int main() {
+    Py_Initialize();
+    PyRun_SimpleString("print('Hello from embedded Python!')");
+    Py_Finalize();
+    return 0;
+}
+Extending Python with C/C++:
+Write C/C++ Extension Module:
+Write a C/C++ module that defines functions or types to be used in Python scripts. This involves writing C/C++ code and using the Python/C API to define the module.
+
+Compile Extension Module:
+Compile the C/C++ module into a shared library (.so on Unix-like systems or .dll on Windows).
+
+Import Module in Python:
+Import the compiled module in Python using the import statement.
+
+Use Functions/Types from Module:
+Once imported, you can use the functions and types defined in the module like any other Python functions/types.
+
+Example:
+Here's a simple C extension module that provides a function to add two numbers:
+
+c
+Copy code
+#include <Python.h>
+
+static PyObject* add_numbers(PyObject* self, PyObject* args) {
+    int a, b;
+    if (!PyArg_ParseTuple(args, "ii", &a, &b)) {
+        return NULL;
+    }
+    return PyLong_FromLong(a + b);
+}
+
+static PyMethodDef methods[] = {
+    {"add", add_numbers, METH_VARARGS, "Add two numbers"},
+    {NULL, NULL, 0, NULL}
+};
+
+static struct PyModuleDef module = {
+    PyModuleDef_HEAD_INIT,
+    "mymodule",
+    NULL,
+    -1,
+    methods
+};
+
+PyMODINIT_FUNC PyInit_mymodule(void) {
+    return PyModule_Create(&module);
+}
+You can compile this code into a shared library and then use it in Python as follows:
+
+
+import mymodule
+print(mymodule.add(2, 3))  # Output: 5
+These are the basic steps involved in embedding and extending Python with C/C++. You can explore more advanced features and techniques based on your specific requirements.
+
+
+how to run above program
+To run the programs described above, you'll need to compile the C/C++ code and execute the resulting executable or shared library. Here are the steps to compile and run the programs:
+
+Embedding Python in C/C++:
+Save the C code:
+Save the C code in a file, for example, embed_python.c.
+
+Compile the code:
+Compile the C code using a C compiler. For example, using gcc:
+
+bash
+Copy code
+gcc -o embed_python embed_python.c -I/usr/include/python3.x -lpython3.x
+Replace /usr/include/python3.x with the appropriate Python header file directory and python3.x with the correct Python version.
+
+Run the executable:
+Run the compiled executable:
+
+bash
+Copy code
+./embed_python
+Extending Python with C/C++:
+Save the C extension module code:
+Save the C extension module code in a file, for example, mymodule.c.
+
+Compile the code into a shared library:
+Compile the C code into a shared library using a C compiler. For example, using gcc:
+
+bash
+Copy code
+gcc -shared -o mymodule.so -fPIC mymodule.c -I/usr/include/python3.x -lpython3.x
+Replace /usr/include/python3.x with the appropriate Python header file directory and python3.x with the correct Python version.
+
+Import and use the module in Python:
+In a Python script, import the compiled module and use its functions. For example:
+
+python
+Copy code
+import mymodule
+print(mymodule.add(2, 3))
+Run the Python script:
+Run the Python script containing the import and function call:
+
+Copy code
+python script.py
+Ensure that you have the correct Python development files installed and that the paths to Python include directories and libraries are specified correctly during compilation. Adjust the commands according to your specific environment and Python version.
+
+
+
+
+
